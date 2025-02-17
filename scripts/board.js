@@ -1,38 +1,26 @@
 // board.js
 
-// Function to initialize the chessboard
 export function initializeBoard() {
     const chessboard = document.getElementById('chessboard');
-    chessboard.innerHTML = ''; // Clear any existing content
+    chessboard.innerHTML = '';
 
-    // Create squares and append to chessboard
+    const fragment = document.createDocumentFragment();
+
     for (let i = 0; i < 64; i++) {
         const square = document.createElement('div');
-        square.classList.add('square');
-        square.dataset.position = getPosition(i); // Set data attribute for position
-
-        // Add light or dark class based on the square's position
-        if ((Math.floor(i / 8) + (i % 8)) % 2 === 0) {
-            square.classList.add('light');
-        } else {
-            square.classList.add('dark');
-        }
-
-        chessboard.appendChild(square);
+        square.classList.add('square', (Math.floor(i / 8) + (i % 8)) % 2 === 0 ? 'light' : 'dark');
+        square.dataset.position = getPosition(i);
+        fragment.appendChild(square);
     }
 
-    // Place initial pieces on the board
+    chessboard.appendChild(fragment);
     placeInitialPieces(chessboard);
 }
 
-// Function to get the position (e.g., 'a1', 'b2') from the index
 function getPosition(index) {
-    const file = String.fromCharCode('a'.charCodeAt(0) + (index % 8));
-    const rank = 8 - Math.floor(index / 8);
-    return `${file}${rank}`;
+    return `${String.fromCharCode(97 + (index % 8))}${8 - Math.floor(index / 8)}`;
 }
 
-// Function to place initial pieces on the board
 function placeInitialPieces(chessboard) {
     const pieces = {
         'a1': '♖', 'b1': '♘', 'c1': '♗', 'd1': '♕', 'e1': '♔', 'f1': '♗', 'g1': '♘', 'h1': '♖',
@@ -41,10 +29,8 @@ function placeInitialPieces(chessboard) {
         'a7': '♟', 'b7': '♟', 'c7': '♟', 'd7': '♟', 'e7': '♟', 'f7': '♟', 'g7': '♟', 'h7': '♟',
     };
 
-    // Place pieces on the board
     for (const [position, piece] of Object.entries(pieces)) {
-        const index = getIndexFromPosition(position);
-        const square = chessboard.children[index];
+        const square = chessboard.children[getIndexFromPosition(position)];
         const pieceElement = document.createElement('div');
         pieceElement.classList.add('piece');
         pieceElement.innerHTML = piece;
@@ -52,9 +38,6 @@ function placeInitialPieces(chessboard) {
     }
 }
 
-// Function to convert position (e.g., 'a1') to index
 function getIndexFromPosition(position) {
-    const file = position.charCodeAt(0) - 'a'.charCodeAt(0);
-    const rank = 8 - parseInt(position[1]);
-    return rank * 8 + file;
+    return (8 - parseInt(position[1])) * 8 + (position.charCodeAt(0) - 97);
 }

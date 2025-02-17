@@ -108,7 +108,7 @@
   }
   
   .piece {
-    font-size: 1.8em;
+    font-size: 2em;
     text-shadow: 0 0 5px var(--Ts);
     transition: transform 0.2s ease-in-out;
     cursor: pointer;
