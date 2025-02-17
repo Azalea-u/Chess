@@ -1,0 +1,120 @@
+:root {
+    font-size: calc(1.5em + 0.5vw);
+    --C: #5bf870; /* Terminal text color */
+    --Bg: #05321e; /* Terminal background color */
+    --Ts: #5bf870a4; /* Text shadow color */
+  }
+  
+  @font-face {
+    font-family: 'VT323';
+    src: url('fonts/VT323-Regular.ttf');
+  }
+  
+  * {
+    color: var(--C);
+    font-family: 'VT323', Helvetica, sans-serif;
+    text-shadow: 0 0 5px var(--Ts);
+  }
+  
+  body {
+    background-color: #001400;
+    background-image: radial-gradient(circle, var(--Bg), #001400);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    font-smooth: never;
+    position: relative;
+    margin: 0;
+    padding: 20px;
+    width: calc(100vw - 40px);
+    overflow: auto;
+    height: calc(100vh - 40px);
+  }
+  
+  body::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06)),
+                linear-gradient(0deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    z-index: 666;
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+  }
+  
+  body::after {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(18, 16, 16, 0.25);
+    opacity: 0;
+    z-index: 666;
+    pointer-events: none;
+    animation: screen_flicker 0.5s ease-in-out infinite;
+  }
+  
+  @keyframes screen_flicker {
+    0% { opacity: 0.8; }
+    10% { opacity: 0.3; }
+    20% { opacity: 0.1; }
+    30% { opacity: 0.4; }
+    40% { opacity: 0.9; }
+    50% { opacity: 0.5; }
+    60% { opacity: 0.2; }
+    70% { opacity: 0.4; }
+    80% { opacity: 0.8; }
+    90% { opacity: 0.4; }
+    100% { opacity: 0.2; }
+  }
+  #chessboard {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    width: 800px;
+    height: 800px;
+    margin: 0 auto;
+    border: none;
+
+  }
+  
+  .square {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid var(--C);
+    box-shadow: inset 0 0 5px var(--Ts);
+  }
+  
+  .light {
+    background-color: var(--Bg);
+  }
+  
+  .dark {
+    background-color: #001400;
+  }
+  
+  .square:hover {
+    background-color: rgba(91, 248, 112, 0.3);
+  }
+  
+  .piece {
+    font-size: 1.8em;
+    text-shadow: 0 0 5px var(--Ts);
+    transition: transform 0.2s ease-in-out;
+    cursor: pointer;
+  }
+  
+  .piece:hover {
+    transform: scale(1.2);
+  }
+    
